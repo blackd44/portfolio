@@ -1,0 +1,46 @@
+:root {
+    //colors
+    --color-hidden: #777777;
+    --color-bright: #d1d1d1;
+    --color-dark: #1d1d20;
+    --color-active: #00ffff;
+    --color-active-2: #ff00ff;
+
+    //gradients
+    --linear-gradient-medium-half: linear-gradient(135deg, var(--color-active) 0%, var(--color-active-2) 50%);
+    --linear-gradient-medium: linear-gradient(135deg, var(--color-active), var(--color-active-2));
+    --linear-gradient-medium-invert: linear-gradient(-45deg, var(--color-active), var(--color-active-2));
+    --linear-gradient-large: linear-gradient(135deg, var(--color-active) 0%, var(--color-active-2) 15%, var(--color-active-2) 85%, var(--color-active) 99%);
+
+    //numbers
+    --line-length: 300px;
+    --padding-size: 20px;
+    --sm-line-width: 2.5px;
+    --xs-line-width: 1px;
+
+    //cursor
+    --cursor-filter: invert(0);
+    --cursor-size: 20px;
+    --cursor-hover-size: 35px;
+
+
+    //time
+    --transition-speed: .5s;
+    --fast-transition-speed: .3s;
+}
+
+@media screen and (orientation: portrait) {
+    :root {
+        --color-active: #00ffff;
+        --color-active-2: #ff00ff;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    :root {
+        --line-length: 120px;
+        --padding-size: 7.5px;
+        --sm-line-width: 2px;
+    }
+}
