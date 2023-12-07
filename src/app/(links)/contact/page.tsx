@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import Input from "@/components/form/input";
 import {
   ChangeEvent,
   FormEventHandler,
@@ -57,18 +58,13 @@ const Contacts = () => {
       </h3>
       <div>
         <form onSubmit={addMessage}>
-          <div>
-            <label>
-              <span>Full Name</span>
-              <input
-                type="text"
-                name="fullName"
-                onChange={changed}
-                defaultValue={message.fullName}
-                required
-              />
-            </label>
-          </div>
+          <Input
+            label="Full Name"
+            defaultValue={message.fullName}
+            onChange={changed}
+            name="fullName"
+            required
+          />
           <div>
             <label>
               <span>Email</span>

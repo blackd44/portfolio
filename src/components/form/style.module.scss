@@ -1,0 +1,63 @@
+@import "../../style/mixin.scss";
+
+.box {
+  margin-bottom: 1.5rem;
+
+  > label {
+    @include flexColumns;
+    position: relative;
+    padding: 0 0 10px;
+    min-height: 40px;
+    height: fit-content;
+    border-bottom: 2px solid currentColor;
+
+    > span {
+      display: inline-block;
+      width: 100%;
+      background: var(--color-dark);
+      position: absolute;
+      translate: 0 21px 0;
+      font-size: 120%;
+      letter-spacing: 2px;
+      transition: var(--fast-transition-speed) ease;
+    }
+
+    input,
+    textarea,
+    select {
+      @include fill;
+      margin: 20px 0 0;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      color: var(--color-bright);
+      outline: none;
+      font-size: 120%;
+    }
+
+    textarea {
+      padding-bottom: 0.5rem;
+      resize: none;
+      height: 38px;
+    }
+  }
+
+  > label:has(
+      input:valid,
+      textarea:valid,
+      select:valid,
+      input:focus,
+      textarea:focus,
+      select:focus
+    ) {
+    > span {
+      font-size: 80%;
+      translate: 0 0 0;
+    }
+  }
+
+  > label:has(textarea) {
+    height: fit-content;
+    padding-bottom: 0;
+  }
+}

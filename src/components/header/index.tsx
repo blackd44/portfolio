@@ -1,49 +1,46 @@
 import Link from "next/link";
 import { CodepenSvg, GithubSvg, LinkedinSvg } from "../../assets/svg";
 import HeaderSettings from "./settings";
+import { ReactNode } from "react";
+
+type prop = {
+  href: string;
+  children?: ReactNode;
+  icon?: ReactNode;
+};
+export function NavLink({ href = "", children, icon }: prop) {
+  return (
+    <Link href={href} target="_blank" rel="noopener noreferrer">
+      <span>{children}</span>
+      <span>{icon}</span>
+    </Link>
+  );
+}
 
 const Header = () => {
   return (
     <header>
       <div className="logo">
-        <Link href="/">D</Link>
+        <Link href="/">44</Link>
       </div>
       <nav>
         <div>
-          <Link
-            href="https://codepen.io/blackd44/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>CodePen</span>
-            <span>
-              <CodepenSvg />
-            </span>
-          </Link>
+          <NavLink href="https://codepen.io/blackd44/" icon={<CodepenSvg />}>
+            CodePen
+          </NavLink>
         </div>
         <div>
-          <Link
-            href="https://github.com/blackd44/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span>Github</span>
-            <span>
-              <GithubSvg />
-            </span>
-          </Link>
+          <NavLink href="https://github.com/blackd44/" icon={<GithubSvg />}>
+            Github
+          </NavLink>
         </div>
         <div>
-          <Link
+          <NavLink
             href="https://www.linkedin.com/in/iradukunda-benn-dalton/"
-            target="_blank"
-            rel="noopener noreferrer"
+            icon={<LinkedinSvg />}
           >
-            <span>Linkedin</span>
-            <span>
-              <LinkedinSvg />
-            </span>
-          </Link>
+            Linkedin
+          </NavLink>
         </div>
         <HeaderSettings />
       </nav>

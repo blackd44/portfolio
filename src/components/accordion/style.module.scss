@@ -1,0 +1,94 @@
+.box {
+  --link-back: color-mix(
+    in oklab,
+    color-mix(
+      in oklab,
+      rgb(var(--active-rgb), 1) 5%,
+      rgb(var(--background-rgb), 1) 25%
+    ),
+    rgb(var(--foreground-rgb), 1) 5%
+  );
+  --back: rgb(var(--foreground-rgb), 0.06);
+  --back-hover: rgb(var(--background-rgb), 0.1);
+  --radius: 0.5rem;
+  --gap: 0.2rem;
+
+  background-color: var(--back);
+
+  position: relative;
+  contain: content;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--gap);
+
+  a label,
+  a .label,
+  .content a.item {
+    background-color: var(--link-back);
+
+    &:hover {
+      background-color: var(--back-hover);
+    }
+  }
+
+  label,
+  .label {
+    --rotate: 0deg;
+
+    display: flex;
+    justify-content: space-between;
+
+    background-color: var(--back);
+
+    padding: var(--radius) 1rem;
+
+    &::after {
+      rotate: var(--rotate);
+      transition: rotate 0.1s ease;
+    }
+
+    &:hover {
+      background-color: color-mix(
+        in oklab,
+        var(--back-hover) 100%,
+        rgb(var(--foreground-rgb), 1) 12%
+      );
+    }
+  }
+
+  .content {
+    max-height: 0;
+    transition: 0.1s ease;
+  }
+
+  > input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+
+    ~ label::after {
+      content: "➤";
+    }
+
+    &:checked {
+      ~ label {
+        --rotate: 90deg;
+      }
+
+      ~ .content {
+        max-height: 20rem;
+      }
+    }
+  }
+
+  .item {
+    display: block;
+    padding: var(--radius) 1rem;
+
+    &:hover {
+      background-color: var(--back-hover);
+    }
+  }
+}

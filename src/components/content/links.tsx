@@ -1,8 +1,29 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import { ReactNode } from "react";
+
+type prop = {
+  href: string;
+  children?: ReactNode;
+};
+export function NavLink({ href = "", children }: prop) {
+  const pathname = usePathname();
+
+  return (
+    <Link
+      href={pathname == href ? "/" : href}
+      className={
+        (pathname == href ? "active" : "") +
+        " " +
+        (pathname.includes(href) ? "inside" : "")
+      }
+    >
+      <span>{children}</span>
+    </Link>
+  );
+}
 
 export default function ContentLinks() {
   const pathname = usePathname();
@@ -11,33 +32,13 @@ export default function ContentLinks() {
     <div className="mine-content">
       <div className="mine-content-inner">
         <div>
-          <Link
-            href={pathname == "/brain" ? "/" : "/brain"}
-            className={
-              (pathname == "/brain" ? "active" : "") +
-              " " +
-              (pathname.includes("/brain") ? "inside" : "")
-            }
-          >
-            <span>my brain</span>
-          </Link>
+          <NavLink href="/brain">my brain</NavLink>
         </div>
         <div>
-          <Link href="">
-            <span>my Achievements</span>
-          </Link>
+          <NavLink href="/projects">Projects</NavLink>
         </div>
         <div>
-          <Link
-            href={pathname == "/contact" ? "/" : "/contact"}
-            className={
-              (pathname == "/contact" ? "active" : "") +
-              " " +
-              (pathname.includes("/contact") ? "inside" : "")
-            }
-          >
-            <span>contact me</span>
-          </Link>
+          <NavLink href="/contact">contact me</NavLink>
         </div>
       </div>
     </div>
