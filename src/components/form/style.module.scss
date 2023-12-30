@@ -11,7 +11,7 @@
     height: fit-content;
     border-bottom: 2px solid currentColor;
 
-    > span {
+    > span:not(.autoHeight) {
       display: inline-block;
       width: 100%;
       background: var(--color-dark);
@@ -24,7 +24,8 @@
 
     input,
     textarea,
-    select {
+    select,
+    .autoHeight {
       @include fill;
       margin: 20px 0 0;
       padding: 0;
@@ -40,6 +41,11 @@
       resize: none;
       height: 38px;
     }
+
+    .autoHeight {
+      max-width: 100%;
+      word-break: break-all;
+    }
   }
 
   > label:has(
@@ -48,9 +54,11 @@
       select:valid,
       input:focus,
       textarea:focus,
-      select:focus
+      select:focus,
+      .autoHeight:focus,
+      .autoHeight.valid
     ) {
-    > span {
+    > span:not(.autoHeight) {
       font-size: 80%;
       translate: 0 0 0;
     }
@@ -60,4 +68,8 @@
     height: fit-content;
     padding-bottom: 0;
   }
+}
+
+.autoHeight.hidden {
+  display: none;
 }

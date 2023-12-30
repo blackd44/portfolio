@@ -1,5 +1,6 @@
 "use client";
 
+import InputAutoHeight from "@/components/form/autoHeight";
 import Input from "@/components/form/input";
 import {
   ChangeEvent,
@@ -65,32 +66,20 @@ const Contacts = () => {
             name="fullName"
             required
           />
-          <div>
-            <label>
-              <span>Email</span>
-              <input
-                type="email"
-                name="email"
-                onChange={changed}
-                defaultValue={message.email}
-                required
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              <span>Message</span>
-              <textarea
-                name="body"
-                onChange={(e) => {
-                  e.target.style.height = e.target.scrollHeight + "px";
-                  changed(e);
-                }}
-                defaultValue={message.body}
-                required
-              />
-            </label>
-          </div>
+          <Input
+            label="Email"
+            defaultValue={message.email}
+            onChange={changed}
+            name="email"
+            type="email"
+            required
+          />
+          <InputAutoHeight
+            label="Message"
+            name="body"
+            required
+            onChange={changed}
+          />
           <button
             data-cursor-filter="invert(1)"
             data-cursor-size="40px"
