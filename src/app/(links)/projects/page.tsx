@@ -1,18 +1,42 @@
 import Accordion from "@/components/accordion";
+import css from './style.module.scss'
 
 export default function Projects() {
   return (
     <>
       <h2>
         <span data-cursor-filter="invert(1)" data-cursor-size="3.5rem">
-          Projects
+          My Experience
         </span>
       </h2>
-      <div>
+      <div className={css.list}>
         <Accordion
           title={
             <>
-              <h2>Software Developer Apprenticeship</h2>
+              <h2 data-cursor-filter="invert(1)" data-cursor-size="50px">
+                Frontend Developer
+              </h2>
+              <em>
+                <b>Uruti Hub</b>, <small>DEC, 2023 - Present</small>
+              </em>
+            </>
+          }
+        >
+          <ul>
+            <li>Expertising ReactJs with typescript</li>
+            <li>
+              Solved problems using the latest in web technologies includes,AWS,
+              PostgreSQL, unit testing, and skills in HTML5/CSS3.
+            </li>
+            <li>Working in SaaS projects</li>
+          </ul>
+        </Accordion>
+        <Accordion
+          title={
+            <>
+              <h2 data-cursor-filter="invert(1)" data-cursor-size="50px">
+                Software Developer Apprenticeship
+              </h2>
               <em>
                 <b>Andela (ATLP)</b>, <small>DEC, 2022 - SEP, 2023</small>
               </em>
@@ -43,8 +67,6 @@ export default function Projects() {
             </ul>
           </div>
         </Accordion>
-        <p>Software</p>
-        <p>Things I love</p>
       </div>
     </>
   );

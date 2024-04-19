@@ -5,7 +5,7 @@ const Footer = () => {
     <footer>
       <span>©2022</span>
       <span>
-        <Link href="/">blackd44</Link>
+        <Link href="/">Benn Dalton</Link>
       </span>
     </footer>
   );

@@ -1,0 +1,16 @@
+.articles article {
+  ul {
+    list-style: none;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 0.2rem 0.25rem;
+
+    li {
+      border-radius: 0.5rem;
+      padding: 0.2rem 0.5rem;
+      background-color: color-mix(in oklch, currentColor 10%, transparent);
+    }
+  }
+}

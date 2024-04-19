@@ -1,94 +1,72 @@
-"use client";
-
-import InputAutoHeight from "@/components/form/autoHeight";
-import Input from "@/components/form/input";
-import {
-  ChangeEvent,
-  FormEventHandler,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+// "use client";
+import css from "./style.module.scss"
 
 const Contacts = () => {
-  const button = useRef<HTMLButtonElement>(null);
+  // const button = useRef<HTMLButtonElement>(null);
 
-  const [message, setMessage] = useState({
-    fullName: "",
-    email: "",
-    body: "",
-  });
+  // const [message, setMessage] = useState({
+  //   fullName: "",
+  //   email: "",
+  //   body: "",
+  // });
 
-  useEffect(() => {
-    if (!button.current) return;
-    if (
-      message.fullName === "" ||
-      message.email === "" ||
-      message.body === ""
-    ) {
-      //setDisabled(prev => true)
-      button.current.disabled = true;
-    } else {
-      //setDisabled(prev => false)
-      button.current.disabled = false;
-    }
-  }, [message]);
+  // useEffect(() => {
+  //   if (!button.current) return;
+  //   if (
+  //     message.fullName === "" ||
+  //     message.email === "" ||
+  //     message.body === ""
+  //   ) {
+  //     //setDisabled(prev => true)
+  //     button.current.disabled = true;
+  //   } else {
+  //     //setDisabled(prev => false)
+  //     button.current.disabled = false;
+  //   }
+  // }, [message]);
 
-  const changed = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  // const changed = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  //   setMessage((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
 
-  const addMessage: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  // const addMessage: FormEventHandler<HTMLFormElement> = (e) => {
+  //   e.preventDefault();
 
-    console.log(message);
+  //   console.log(message);
 
-    /*
-        const inputs = e.target.querySelectorAll('input, textarea')
-        inputs.forEach(el => {
-            el.value = ''
-        })
-        */
-  };
+  //   /*
+  //       const inputs = e.target.querySelectorAll('input, textarea')
+  //       inputs.forEach(el => {
+  //           el.value = ''
+  //       })
+  //       */
+  // };
   return (
     <>
       <h3>
         <span data-cursor-filter="invert(1)" data-cursor-size="50px">
-          Message me{" "}
+          Message me
         </span>
       </h3>
-      <div>
-        <form onSubmit={addMessage}>
-          <Input
-            label="Full Name"
-            defaultValue={message.fullName}
-            onChange={changed}
-            name="fullName"
-            required
-          />
-          <Input
-            label="Email"
-            defaultValue={message.email}
-            onChange={changed}
-            name="email"
-            type="email"
-            required
-          />
-          <InputAutoHeight
-            label="Message"
-            name="body"
-            required
-            onChange={changed}
-          />
-          <button
-            data-cursor-filter="invert(1)"
-            data-cursor-size="40px"
-            ref={button}
-            disabled
-          >
-            Send Message
-          </button>
-        </form>
+      <div className={css.links}>
+        <p>
+          <b>Phone Number:</b>
+          <span>+250798895340</span>
+        </p>
+        <p>
+          <b>Email:</b>
+          <span>irabd44@gmail.com</span>
+        </p>
+        <p>
+          <b>LinkedIn:</b>
+          <span>
+            <span>iradukunda-benn-dalton</span>
+            <br />
+            <a target="_blank_">
+              https://www.linkedin.com/in/iradukunda-benn-dalton/
+            </a>
+          </span>
+        </p>
       </div>
     </>
   );

@@ -1,0 +1,32 @@
+.list {
+  display: grid;
+  gap: 1rem;
+
+  h2 {
+    margin: 0;
+    margin-bottom: 0.2rem;
+    list-style: circle;
+  }
+
+  label {
+    padding-left: 0 !important;
+  }
+
+  label + div {
+    padding-top: 0.5rem;
+    padding-left: 1rem;
+
+    > div {
+      display: grid;
+      gap: 1rem;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1rem;
+
+      li:not(:last-of-type) {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}
