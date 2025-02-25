@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CodepenSvg, GithubSvg, LinkedinSvg } from "../../assets/svg";
+import { CodepenSvg, GithubSvg, LinkedinSvg } from "../../../assets/svg";
 import HeaderSettings from "./settings";
 import { ReactNode } from "react";
 
@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header>
       <div className="logo">
-        <Link href="/">BD</Link>
+        {/* <Link href="/"></Link> */}
       </div>
       <nav>
         <div>

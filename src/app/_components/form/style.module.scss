@@ -1,4 +1,4 @@
-@import "../../style/mixin.scss";
+@use "../../style/mixin.scss" as *;
 
 .box {
   margin-bottom: 1.5rem;

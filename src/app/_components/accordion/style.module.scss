@@ -41,7 +41,7 @@
 
     background-color: var(--back);
 
-    padding: var(--radius) 1rem;
+    padding: var(--radius) 1rem 0;
 
     &::after {
       rotate: var(--rotate);

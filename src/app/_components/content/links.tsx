@@ -38,7 +38,7 @@ export default function ContentLinks() {
           <NavLink href="/projects">My Experience</NavLink>
         </div>
         <div>
-          <NavLink href="/contact">contact me</NavLink>
+          <NavLink href="/contact">My contacts</NavLink>
         </div>
       </div>
     </div>

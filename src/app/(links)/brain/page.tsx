@@ -1,48 +1,75 @@
+import PageHeader from "@/app/_components/ui/page-header";
 import css from "./style.module.scss";
+import { cn } from "@/utils/utils";
+import { title } from "process";
 
 const Skills = () => {
   return (
     <>
-      <h2>
-        <span data-cursor-filter="invert(1)" data-cursor-size="50px">
-          In My Brain
-        </span>
-      </h2>
-      <div className={css.articles}>
-        <article>
-          <h3>Technical skills</h3>
-          <ul>
-            <li>HTML5</li>
-            <li>CSS3</li>
-            <li>JavaScript</li>
-            <li>TypeScript</li>
-            <li>ReactJS</li>
-            <li>Next.js</li>
-            <li>Node.js</li>
-            <li>GraphQL</li>
-            <li>PostgreSQL</li>
-            <li>Unit Testing</li>
-          </ul>
-        </article>
-        <article>
-          <h3>Software</h3>
-          <ul>
-            <li>Figma</li>
-            <li>Sketch</li>
-            <li>Adobe Photoshop</li>
-            <li>Adobe Illustrator</li>
-            <li>Adobe InDesign</li>
-          </ul>
-        </article>
-        <article>
-          <h3>Things I love</h3>
-          <ul>
-            <li>Problem Solving</li>
-            <li>Mind Games</li>
-            <li>Games</li>
-            <li>Coding</li>
-          </ul>
-        </article>
+      <PageHeader>In My Brain</PageHeader>
+      <div className={cn(css.articles, "space-y-4")}>
+        {[
+          {
+            title: "Technical skills",
+            list: [
+              "HTML5",
+              "CSS3",
+              "TailwindCSS",
+              "JavaScript",
+              "TypeScript",
+              "ReactJS",
+              "Nextjs",
+              "Nestjs",
+              "Node.js",
+              "GraphQL",
+              "PostgreSQL",
+              "MongoDB",
+              "Unit Testing",
+              "Git",
+              "AWS",
+            ],
+          },
+          {
+            title: "Soft skills",
+            list: [
+              "Leadership",
+              "Communication",
+              "Problem Solving",
+              "Teamwork",
+              "Time Management",
+              "Attention to Detail",
+              "Adaptability",
+              "Flexibility",
+            ],
+          },
+          {
+            title: "Softwares",
+            list: [
+              "Figma",
+              "Sketch",
+              "Adobe Photoshop",
+              "Adobe Illustrator",
+              "Adobe InDesign",
+            ],
+          },
+          {
+            title: "Languages",
+            list: ["English", "French"],
+          },
+          {
+            title: "Things I love",
+            list: ["Mind Games", "video games", "Coding"],
+          },
+        ]?.map(({ title, list }) => (
+          <article key={title}>
+            <h3 className="font-semibold mb-2">{title}</h3>
+            <ul className="pl-2">
+              {list?.map((one) => (
+                <li key={one}>{one}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
       </div>
     </>
   );

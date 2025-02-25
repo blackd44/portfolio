@@ -1,4 +1,4 @@
-import Content from "@/components/content";
+import Content from "@/app/_components/content";
 
 export default function LinksLayout({
   children,

@@ -1,15 +1,33 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Audiowide, Rajdhani, Archivo_Black } from "next/font/google";
 import "../style/globals.scss";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import Mouse from "@/components/mouse";
+import Header from "@/app/_components/header";
+import Footer from "@/app/_components/footer";
+import Mouse from "@/app/_components/mouse";
+import { Toaster } from "react-hot-toast";
+import { cn } from "@/utils/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const audiowide = Audiowide({
+  variable: "--font-audiowide",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const rajdhani = Rajdhani({
+  variable: "--font-rajdhani",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivoBlack",
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export const metadata: Metadata = {
   title: "Benn Dalton IRADUKUNDA Dushimimana | Portifolio",
-  description: "Explore the digital realm where creativity meets innovation. As a passionate Frontend Developer and UI/UX enthusiast, I specialize in crafting exceptional user experiences that captivate and inspire. Dive into my portfolio to discover a collection of projects that showcase my expertise in HTML, CSS, JavaScript, React, and more. From sleek web designs to interactive prototypes, each piece tells a story of dedication, creativity, and craftsmanship. Join me on this journey through pixels and code, where every click sparks imagination and every scroll unveils a new adventure.",
+  description: "I'm a Full-Stack Developer, crafting seamless solutions from front to back.",
 };
 
 export default function RootLayout({
@@ -19,7 +37,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body
+        className={cn(
+          audiowide.variable,
+          rajdhani.variable,
+          archivoBlack.variable,
+          `antialiased font-rajdhani font-medium`
+        )}
+      >
         <div className="main-container">
           <div className="main-container-outer">
             <div className="main-container-inner">
@@ -29,6 +54,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
         <Mouse />
       </body>
     </html>

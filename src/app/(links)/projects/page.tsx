@@ -1,23 +1,62 @@
-import Accordion from "@/components/accordion";
-import css from './style.module.scss'
+import Accordion from "@/app/_components/accordion";
+import css from "./style.module.scss";
+import PageHeader from "@/app/_components/ui/page-header";
 
 export default function Projects() {
   return (
     <>
-      <h2>
-        <span data-cursor-filter="invert(1)" data-cursor-size="3.5rem">
-          My Experience
-        </span>
-      </h2>
+      <PageHeader>My Experience</PageHeader>
       <div className={css.list}>
         <Accordion
           title={
             <>
-              <h2 data-cursor-filter="invert(1)" data-cursor-size="50px">
-                Frontend Developer
-              </h2>
+              <PageHeader cursorSize="2rem" noSpan>
+                Full-Stack Developer
+              </PageHeader>
               <em>
-                <b>Uruti Hub</b>, <small>DEC, 2023 - Present</small>
+                <b>Blockchain Tech Solutions Ltd</b>,{" "}
+                <small>JUN, 2024 - FEB, 2025</small>
+              </em>
+            </>
+          }
+        >
+          <ul>
+            <li>
+              <span>
+                Worked in partnership with Kokomo-games and make those projects
+                bellow
+              </span>
+              <ul>
+                <li>
+                  <b>1M1KOKOs</b>, an innovative tap-to-win game with system mechanics
+                  such as streaks and missions that achieved 200,000 users in 2
+                  months.
+                </li>
+                <li>
+                  <b>KOKO Snake</b>, a skill-based variant of Snake introducing a
+                  specialized economic system for users to earn KOKOs, which are
+                  then converted to real money value contingent on player skill.
+                </li>
+                <li>
+                  KOKO Snake has achieved over 100,000 users in less than two
+                  weeks
+                </li>
+              </ul>
+            </li>
+            <li>
+              Skills: Nestjs, Next.js, postgreSQL, server management, algorithm,
+              web sockets
+            </li>
+          </ul>
+        </Accordion>
+        <Accordion
+          title={
+            <>
+              <PageHeader cursorSize="2rem" noSpan>
+                Frontend Developer
+              </PageHeader>
+              <em>
+                <b>Uruti Hub</b>, <small>DEC, 2023 - JULY, 2024</small>
               </em>
             </>
           }
@@ -34,9 +73,9 @@ export default function Projects() {
         <Accordion
           title={
             <>
-              <h2 data-cursor-filter="invert(1)" data-cursor-size="50px">
+              <PageHeader cursorSize="2rem" noSpan>
                 Software Developer Apprenticeship
-              </h2>
+              </PageHeader>
               <em>
                 <b>Andela (ATLP)</b>, <small>DEC, 2022 - SEP, 2023</small>
               </em>

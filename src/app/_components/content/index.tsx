@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 import ContentLinks from "./links";
+import { cn } from "@/utils/utils";
+import PageHeader from "../ui/page-header";
 
 type props = {
   children: ReactNode;
@@ -10,14 +12,10 @@ const Content = ({ children, type }: props) => {
   return (
     <>
       <section className="view">
-        <div className={`main-content $`}>{children}</div>
+        <div className={cn(`main-content  space-y-4`)}>{children}</div>
         <div className="mine">
           <div className="mine-inner">
-            <h2>
-              <span data-cursor-filter="invert(1)" data-cursor-size="30px">
-                Check
-              </span>
-            </h2>
+            <PageHeader className="capitalize m-4 mx-8">Check</PageHeader>
             <ContentLinks />
           </div>
         </div>
