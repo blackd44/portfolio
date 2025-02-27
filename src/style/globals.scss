@@ -255,32 +255,15 @@ header {
         max-height: calc(100vh - 55px - (var(--padding-size) * 2));
         overflow-y: auto;
         right: 0;
-        backdrop-filter: blur(3px) brightness(0.4);
-        border-radius: 10px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
+        backdrop-filter: blur(3px);
         visibility: hidden;
-        background-color: #6666;
-        box-shadow: -15px 15px 15px 0 rgb(0, 0, 0, 0.15);
+        background-color: color-mix(in oklab, var(--color-dark) 70%, #8888);
+        box-shadow: -15px 15px 15px 0 #2222;
 
         > div {
-          padding: 0.5rem calc(var(--padding-size) * 2);
-
-          > article {
-            border-bottom: 1px solid currentColor;
-          }
-
-          > article:last-child {
-            border-bottom: 1px solid transparent;
-          }
+          padding-inline: calc(var(--padding-size) * 2);
 
           p:has(> label) {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 0;
-            padding: 0 2rem;
-
             > label:has(input) {
               display: inline-block;
               height: 30px;
@@ -302,6 +285,14 @@ header {
               }
             }
           }
+        }
+
+        button {
+          border-color: color-mix(
+            in oklab,
+            var(--color-bright) 60%,
+            transparent
+          );
         }
       }
     }

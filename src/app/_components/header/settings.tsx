@@ -2,7 +2,7 @@
 
 import { Settings } from "@/assets/svg";
 import Link from "next/link";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 function ColorInput({
   color,
@@ -16,7 +16,7 @@ function ColorInput({
   setColor: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <p>
+    <p className="flex items-center gap-2 px-4 font-semibold">
       <label style={{ backgroundColor: `var(--color-${color})` }}>
         <input type="color" id={id} data-color={color} onChange={setColor} />
       </label>
@@ -27,26 +27,47 @@ function ColorInput({
   );
 }
 
+const defaultColors = {
+  active: "#00ffff",
+  "active-2": "#ff00ff",
+  bright: "#d1d1d1",
+  dark: "#131314",
+};
+
 export default function HeaderSettings() {
-  type colorType = "line1" | "line1" | "text1" | "text2";
-  const [colors, setColors] = useState({
-    line1: "#00ffff",
-    line2: "#ff00ff",
-    text1: "#d1d1d1",
-    text2: "#1d1d20",
-  });
+  const set = useCallback(
+    (el: string, val: string, isReset: boolean = false) => {
+      document.documentElement.style.setProperty(el, val);
+      if (!isReset) localStorage.setItem(el, val);
+      else localStorage.removeItem(el);
+    },
+    []
+  );
 
-  const set = (el: string, val: string) => {
-    document.documentElement.style.setProperty(el, val);
-  };
+  const colorchange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      set(`--color-${e.target.dataset.color}`, e.target.value);
+    },
+    [set]
+  );
 
-  const colorchange = (e: ChangeEvent<HTMLInputElement>) => {
-    setColors((p) => {
-      p[e.target.id as colorType] = e.target.value;
-      return p;
+  const resetColors = useCallback(() => {
+    Object.entries(defaultColors).forEach(([el, val]) => {
+      set(`--color-${el}`, val, true);
     });
-    set(`--color-${e.target.dataset.color}`, e.target.value);
-  };
+  }, [set]);
+
+  useEffect(() => {
+    const activeColors = localStorage.getItem("--color-active");
+    const activeColors2 = localStorage.getItem("--color-active-2");
+    const brightColors = localStorage.getItem("--color-bright");
+    const darkColors = localStorage.getItem("--color-dark");
+
+    if (activeColors) set(`--color-active`, activeColors);
+    if (activeColors2) set(`--color-active-2`, activeColors2);
+    if (brightColors) set(`--color-bright`, brightColors);
+    if (darkColors) set(`--color-dark`, darkColors);
+  }, [set]);
 
   return (
     <div className="settings">
@@ -56,38 +77,44 @@ export default function HeaderSettings() {
           <Settings />
         </span>
       </Link>
-      <div>
-        <div>
-          <article>
-            <p>Page colors</p>
+      <div className="rounded-xl rounded-tr-md border border-gray-400/10">
+        <div className="py-4 space-y-6">
+          <article className="space-y-2">
+            <p className="font-audiowide">Page colors</p>
             <ColorInput
-              id="text1"
+              id="bright"
               color="bright"
               setColor={colorchange}
               label="text color"
             />
             <ColorInput
-              id="text2"
+              id="dark"
               color="dark"
               setColor={colorchange}
               label="back color"
             />
           </article>
-          <article>
-            <p>Line colors</p>
+          <article className="space-y-2">
+            <p className="font-audiowide">Line colors</p>
             <ColorInput
-              id="line1"
+              id="active"
               color="active"
               setColor={colorchange}
               label="Color 1"
             />
             <ColorInput
-              id="line2"
+              id="active-2"
               color="active-2"
               setColor={colorchange}
               label="Color 2"
             />
           </article>
+          <button
+            onClick={resetColors}
+            className="border-2 w-full p-1 rounded-md font-semibold"
+          >
+            Reset
+          </button>
         </div>
       </div>
     </div>
