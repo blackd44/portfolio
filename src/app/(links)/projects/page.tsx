@@ -1,12 +1,13 @@
 import Accordion from "@/app/_components/accordion";
 import css from "./style.module.scss";
 import PageHeader from "@/app/_components/ui/page-header";
+import { cn } from "@/utils/utils";
 
 export default function Projects() {
   return (
     <>
       <PageHeader>My Experience</PageHeader>
-      <div className={css.list}>
+      <div className={cn(css.list)}>
         <Accordion
           title={
             <>

@@ -2,7 +2,7 @@
 
 import { Settings } from "@/assets/svg";
 import Link from "next/link";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from "react";
 
 function ColorInput({
   color,
@@ -57,7 +57,7 @@ export default function HeaderSettings() {
     });
   }, [set]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const activeColors = localStorage.getItem("--color-active");
     const activeColors2 = localStorage.getItem("--color-active-2");
     const brightColors = localStorage.getItem("--color-bright");

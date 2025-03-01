@@ -329,6 +329,13 @@ header {
   }
 }
 
+.border-color {
+  border-color: color-mix(in oklab, var(--color-bright) 10%, transparent);
+}
+.outline-color {
+  outline-color: color-mix(in oklab, var(--color-bright) 10%, transparent);
+}
+
 main {
   @include flexCenterY;
 

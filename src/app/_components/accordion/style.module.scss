@@ -70,6 +70,7 @@
 
     ~ label::after {
       content: "➤";
+      height: fit-content;
     }
 
     &:checked {
@@ -78,7 +79,7 @@
       }
 
       ~ .content {
-        max-height: 20rem;
+        max-height: 23rem;
       }
     }
   }
