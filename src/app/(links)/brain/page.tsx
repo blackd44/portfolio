@@ -54,7 +54,7 @@ const Skills = () => {
           },
           {
             title: "Languages",
-            list: ["English", "French"],
+            list: ["English"],
           },
           {
             title: "Things I love",

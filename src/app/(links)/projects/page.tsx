@@ -16,7 +16,7 @@ export default function Projects() {
               </PageHeader>
               <em>
                 <b>Blockchain Tech Solutions Ltd</b>,{" "}
-                <small>JUN, 2024 - FEB, 2025</small>
+                <small>JUN, 2024 - Present</small>
               </em>
             </>
           }
