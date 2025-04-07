@@ -2,15 +2,22 @@ import Link from "next/link";
 import { CodepenSvg, GithubSvg, LinkedinSvg } from "../../../assets/svg";
 import HeaderSettings from "./settings";
 import { ReactNode } from "react";
+import { cn } from "@/utils/utils";
 
 type prop = {
   href: string;
   children?: ReactNode;
   icon?: ReactNode;
+  className?: string;
 };
-export function NavLink({ href = "", children, icon }: prop) {
+export function NavLink({ href = "", children, icon, className }: prop) {
   return (
-    <Link href={href} target="_blank" rel="noopener noreferrer">
+    <Link
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(className)}
+    >
       <span>{children}</span>
       <span>{icon}</span>
     </Link>
@@ -20,9 +27,7 @@ export function NavLink({ href = "", children, icon }: prop) {
 const Header = () => {
   return (
     <header>
-      <div className="logo">
-        {/* <Link href="/"></Link> */}
-      </div>
+      <div className="logo">{/* <Link href="/"></Link> */}</div>
       <nav>
         <div>
           <NavLink href="https://codepen.io/blackd44/" icon={<CodepenSvg />}>

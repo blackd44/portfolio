@@ -2,6 +2,7 @@ import Accordion from "@/app/_components/accordion";
 import css from "./style.module.scss";
 import PageHeader from "@/app/_components/ui/page-header";
 import { cn } from "@/utils/utils";
+import { NavLink } from "@/app/_components/header";
 
 export default function Projects() {
   return (
@@ -29,14 +30,29 @@ export default function Projects() {
               </span>
               <ul>
                 <li>
-                  <b>1M1KOKOs</b>, an innovative tap-to-win game with system mechanics
-                  such as streaks and missions that achieved 200,000 users in 2
-                  months.
+                  <b>1M1KOKOs</b>, an innovative tap-to-win game with system
+                  mechanics such as streaks and missions that achieved 200,000
+                  users in 2 months.
+                  <br />
+                  <NavLink
+                    href="https://t.me/One_Million_One_bot?startapp=rs_5679160628"
+                    className="font-bold italic ml-4"
+                  >
+                    (Preview)
+                  </NavLink>
                 </li>
                 <li>
-                  <b>KOKO Snake</b>, a skill-based variant of Snake introducing a
-                  specialized economic system for users to earn KOKOs, which are
-                  then converted to real money value contingent on player skill.
+                  <b>KOKO Snake</b>, a skill-based variant of Snake introducing
+                  a specialized economic system for users to earn KOKOs, which
+                  are then converted to real money value contingent on player
+                  skill.
+                  <br />
+                  <NavLink
+                    href="https://t.me/Koko_Snake_Bot?startapp=rs_5679160628"
+                    className="font-bold italic ml-4"
+                  >
+                    (Preview)
+                  </NavLink>
                 </li>
                 <li>
                   KOKO Snake has achieved over 100,000 users in less than two

@@ -26,8 +26,6 @@ export function NavLink({ href = "", children }: prop) {
 }
 
 export default function ContentLinks() {
-  const pathname = usePathname();
-
   return (
     <div className="mine-content">
       <div className="mine-content-inner">
