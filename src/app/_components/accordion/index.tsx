@@ -21,7 +21,7 @@ export default function Accordion({ title, children, onClick }: AccProps) {
       <label
         htmlFor={id}
         onClick={onClick}
-        className={cn("outline-color !outline outline-0 !px-3 !pb-1.5 m-1", "rounded-md")}
+        className={cn("outline-color outline! outline-0 px-3! pb-1.5! m-1", "rounded-md")}
       >
         <div>{title}</div>
       </label>

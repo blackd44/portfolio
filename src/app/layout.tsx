@@ -27,8 +27,9 @@ const archivoBlack = Archivo_Black({
 });
 
 export const metadata: Metadata = {
-  title: "Benn Dalton IRADUKUNDA Dushimimana | Portifolio",
-  description: "I'm a Full-Stack Developer, crafting seamless solutions from front to back.",
+  title: "Benn Dalton IRADUKUNDA Dushimimana | Backend Engineer",
+  description:
+    "Backend Engineer with 4+ years building scalable APIs and real-time systems in Node.js, TypeScript, and PostgreSQL.",
 };
 
 export default function RootLayout({

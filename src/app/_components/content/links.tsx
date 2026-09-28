@@ -33,7 +33,10 @@ export default function ContentLinks() {
           <NavLink href="/brain">my brain</NavLink>
         </div>
         <div>
-          <NavLink href="/projects">My Experience</NavLink>
+          <NavLink href="/experience">My Experience</NavLink>
+        </div>
+        <div>
+          <NavLink href="/projects">Key Projects</NavLink>
         </div>
         <div>
           <NavLink href="/contact">My contacts</NavLink>
