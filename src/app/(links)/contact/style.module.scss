@@ -1,16 +1,286 @@
-.links {
-  > * {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+.contact {
+  --hairline: color-mix(in oklab, var(--color-bright) 12%, transparent);
+  --radius: 14px;
+}
 
-    b {
-      color: var(--mix-2);
-      transition: color var(--fast-transition-speed) ease;
-    }
+.grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
 
-    &:hover b {
-      color: var(--color-active-2);
+  @container (min-width: 44rem) {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid color-mix(in oklab, var(--tint) 35%, transparent);
+  border-radius: 0.65rem;
+  color: var(--tint);
+  transition:
+    color var(--fast-transition-speed) ease,
+    border-color var(--fast-transition-speed) ease;
+}
+
+.side {
+  display: block;
+  font-family: var(--nf-audiowide);
+  font-size: 1.05rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.focus {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.panel {
+  position: relative;
+  isolation: isolate;
+  padding: 1.25rem 1.25rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(
+      120% 50% at 0% 0%,
+      color-mix(in oklab, var(--tint) 7%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--color-bright) 2%, transparent);
+  transition: border-color var(--fast-transition-speed) ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 0 solid transparent;
+    border-width: 2px 0 0 2px;
+    border-top-left-radius: var(--radius);
+    background: linear-gradient(135deg, var(--tint), transparent 65%) border-box;
+    -webkit-mask:
+      linear-gradient(#000 0 0) padding-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) padding-box exclude,
+      linear-gradient(#000 0 0);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--fast-transition-speed) ease;
+  }
+
+  &:hover,
+  &:focus-within {
+    --tint: var(--tone);
+    border-color: color-mix(in oklab, var(--tone) 35%, transparent);
+
+    &::before {
+      opacity: 1;
     }
   }
+
+  > form {
+    margin-top: 1.5rem;
+  }
+
+  > form > button[type="submit"] {
+    margin-top: 1.25rem;
+  }
+}
+
+.panelRight::before {
+  left: auto;
+  right: -1px;
+  border-width: 2px 2px 0 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: var(--radius);
+  background: linear-gradient(225deg, var(--tint), transparent 65%) border-box;
+}
+
+.panelRight {
+  background:
+    radial-gradient(
+      120% 50% at 100% 0%,
+      color-mix(in oklab, var(--tint) 7%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--color-bright) 2%, transparent);
+}
+
+.direct {
+  display: grid;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px dashed var(--hairline);
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--nf-audiowide);
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--tint);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: color var(--fast-transition-speed) ease;
+
+  &:hover {
+    color: var(--tint);
+  }
+}
+
+.panel .actions {
+  display: inline-flex;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--tint) 30%, transparent);
+  border-radius: 0.45rem;
+  transition: border-color var(--fast-transition-speed) ease;
+
+  &:hover {
+    border-color: color-mix(in oklab, var(--tint) 60%, transparent);
+  }
+
+  button,
+  a {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    height: 1.6rem;
+    padding: 0 0.5rem;
+    font-size: 0.68rem;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color var(--fast-transition-speed) ease,
+      background-color var(--fast-transition-speed) ease;
+
+    &:hover {
+      color: var(--tint);
+      background-color: color-mix(in oklab, var(--tint) 12%, transparent);
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--tint);
+      outline-offset: -2px;
+    }
+
+    + a,
+    + button {
+      border-left: 1px solid color-mix(in oklab, var(--tint) 30%, transparent);
+    }
+  }
+
+  .copied {
+    color: var(--tint);
+  }
+}
+
+.profiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.75rem;
+    border: 1px solid color-mix(in oklab, var(--tint) 30%, transparent);
+    border-radius: 0.55rem;
+    font-weight: 600;
+    transition:
+      border-color var(--fast-transition-speed) ease,
+      background-color var(--fast-transition-speed) ease,
+      color var(--fast-transition-speed) ease;
+
+    > svg:last-child {
+      opacity: 0.6;
+    }
+
+    &:hover {
+      color: var(--tint);
+      border-color: var(--tint);
+      background-color: color-mix(in oklab, var(--tint) 12%, transparent);
+    }
+  }
+}
+
+.where {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.9rem;
+
+  > span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.8;
+
+    svg {
+      color: var(--tint);
+    }
+  }
+}
+
+.time {
+  font-family: var(--nf-audiowide);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  color: var(--tint);
 }

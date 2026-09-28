@@ -454,7 +454,7 @@ main {
         padding-left: calc(var(--padding-size) + 10px);
         position: relative;
 
-        button {
+        button[type="submit"] {
           width: 100%;
           padding: 0.7rem;
           border: 1px solid transparent;
@@ -466,12 +466,12 @@ main {
         }
 
         @media (hover: hover) {
-          button:hover {
+          button[type="submit"]:hover {
             box-shadow: 0 0 var(--padding-size) var(--color-hidden);
           }
         }
 
-        button:disabled {
+        button[type="submit"]:disabled {
           border-color: currentColor;
           background-color: var(--color-dark);
           color: var(--color-hidden);
