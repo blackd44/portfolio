@@ -1,12 +1,12 @@
-@use "../../style/mixin.scss" as *;
+@use "../../../style/mixin.scss" as *;
 
 .box {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 
   > label {
     @include flexColumns;
     position: relative;
-    padding: 0 0 10px;
+    padding: 0 0 0.2rem;
     min-height: 40px;
     height: fit-content;
     border-bottom: 2px solid currentColor;
@@ -14,10 +14,10 @@
     > span:not(.autoHeight) {
       display: inline-block;
       width: 100%;
-      background: var(--color-dark);
       position: absolute;
+      pointer-events: none;
       translate: 0 21px 0;
-      font-size: 120%;
+      font-size: 100%;
       letter-spacing: 2px;
       transition: var(--fast-transition-speed) ease;
     }
@@ -36,6 +36,14 @@
       font-size: 120%;
     }
 
+    input:is(:autofill, :-webkit-autofill) {
+      -webkit-text-fill-color: var(--color-bright);
+      caret-color: var(--color-bright);
+      transition:
+        background-color 600000s 0s,
+        color 600000s 0s;
+    }
+
     textarea {
       padding-bottom: 0.5rem;
       resize: none;
@@ -49,7 +57,7 @@
   }
 
   > label:has(
-      input:valid,
+      input:not(:placeholder-shown),
       textarea:valid,
       select:valid,
       input:focus,
@@ -64,9 +72,46 @@
     }
   }
 
+  > label:has(input:is(:autofill, :-webkit-autofill)) {
+    background: color-mix(in oklab, var(--color-bright) 8%, transparent);
+    border-radius: 4px 4px 0 0;
+    box-shadow:
+      -0.5rem 0 0 color-mix(in oklab, var(--color-bright) 8%, transparent),
+      0.5rem 0 0 color-mix(in oklab, var(--color-bright) 8%, transparent);
+
+    > span:not(.autoHeight) {
+      font-size: 80%;
+      translate: 0 0 0;
+    }
+  }
+
   > label:has(textarea) {
     height: fit-content;
     padding-bottom: 0;
+  }
+}
+
+.box.invalid > label {
+  border-bottom-color: var(--color-error);
+}
+
+.error {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 90%;
+  color: var(--color-error);
+}
+
+.hint {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+
+  > span:last-child:not(.error) {
+    margin-top: 0.4rem;
+    margin-left: auto;
+    font-size: 85%;
+    opacity: 0.6;
   }
 }
 

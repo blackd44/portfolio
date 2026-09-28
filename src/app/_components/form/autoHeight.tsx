@@ -3,10 +3,12 @@ import {
   HTMLInputTypeAttribute,
   ReactNode,
   useCallback,
+  useId,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import { cn } from "@/utils/utils";
 import css from "./style.module.scss";
 
 type props = {
@@ -17,6 +19,9 @@ type props = {
   required?: boolean;
   type?: HTMLInputTypeAttribute;
   onChange?: (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+  onBlur?: () => void;
+  error?: string;
+  hint?: ReactNode;
 };
 
 export default function InputAutoHeight({
@@ -26,7 +31,11 @@ export default function InputAutoHeight({
   label,
   required,
   onChange,
+  onBlur,
+  error,
+  hint,
 }: props) {
+  const errorId = useId();
   const spanRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [filled, setFilled] = useState(Boolean(defaultValue || children));
@@ -64,18 +73,31 @@ export default function InputAutoHeight({
   }, [change]);
 
   return (
-    <div className={css.box}>
+    <div className={cn(css.box, error && css.invalid)}>
       <label onClick={focus}>
         {label && <span>{label}</span>}
         <span
           ref={spanRef}
           className={`${css.autoHeight} ${filled ? css.valid : ""}`}
           role="textbox"
+          aria-label={label}
+          aria-multiline="true"
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? errorId : undefined}
+          onBlur={onBlur}
           contentEditable
         >
           {defaultValue || children}
         </span>
       </label>
+      {(error || hint) && (
+        <p className={css.hint}>
+          <span id={errorId} className={css.error}>
+            {error}
+          </span>
+          {hint && <span>{hint}</span>}
+        </p>
+      )}
       <textarea
         onFocus={focus}
         ref={inputRef}

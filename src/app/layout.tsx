@@ -57,7 +57,36 @@ export default function RootLayout({
           </div>
         </div>
         <div className="page-frame" aria-hidden="true" />
-        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            duration: 2000,
+            style: {
+              color: "var(--color-bright)",
+              background:
+                "color-mix(in oklab, var(--color-dark) 70%, #8888)",
+              backdropFilter: "blur(3px)",
+              border:
+                "1px solid color-mix(in oklab, var(--color-bright) 12%, transparent)",
+              borderRadius: "10px",
+              boxShadow: "-15px 15px 15px 0 #2222",
+              fontWeight: 600,
+            },
+            success: {
+              iconTheme: {
+                primary: "var(--color-active)",
+                secondary: "var(--color-dark)",
+              },
+            },
+            error: {
+              duration: 4000,
+              iconTheme: {
+                primary: "var(--color-error)",
+                secondary: "var(--color-dark)",
+              },
+            },
+          }}
+        />
         <Mouse />
       </body>
     </html>
