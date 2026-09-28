@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Audiowide, Rajdhani, Archivo_Black } from "next/font/google";
+import "../style/tailwind.css";
 import "../style/globals.scss";
 import Header from "@/app/_components/header";
 import Footer from "@/app/_components/footer";
@@ -8,19 +9,19 @@ import { Toaster } from "react-hot-toast";
 import { cn } from "@/utils/utils";
 
 const audiowide = Audiowide({
-  variable: "--font-audiowide",
+  variable: "--nf-audiowide",
   subsets: ["latin"],
   weight: "400",
 });
 
 const rajdhani = Rajdhani({
-  variable: "--font-rajdhani",
+  variable: "--nf-rajdhani",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 const archivoBlack = Archivo_Black({
-  variable: "--font-archivoBlack",
+  variable: "--nf-archivoBlack",
   subsets: ["latin"],
   weight: "400",
 });

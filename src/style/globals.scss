@@ -2,9 +2,6 @@
 @use "variable.scss" as *;
 @use "function.scss" as *;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 * {
   box-sizing: border-box;

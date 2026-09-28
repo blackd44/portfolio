@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@source "../";
+
+@theme inline {
+  --font-audiowide: var(--nf-audiowide);
+  --font-rajdhani: var(--nf-rajdhani);
+  --font-archivoBlack: var(--nf-archivoBlack);
+
+  --color-background: var(--color-dark);
+  --color-foreground: var(--color-bright);
+  --color-primary: var(--color-active);
+  --color-secondary: var(--color-active-2);
+}

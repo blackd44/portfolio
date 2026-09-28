@@ -5,6 +5,7 @@ import {
   useCallback,
   useLayoutEffect,
   useRef,
+  useState,
 } from "react";
 import css from "./style.module.scss";
 
@@ -28,6 +29,7 @@ export default function InputAutoHeight({
 }: props) {
   const spanRef = useRef<HTMLSpanElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [filled, setFilled] = useState(Boolean(defaultValue || children));
 
   const focus = useCallback(() => {
     if (!spanRef.current) return;
@@ -40,12 +42,14 @@ export default function InputAutoHeight({
       const span = e.target as HTMLSpanElement;
       if (!input || !span) return;
       input.value = span.innerText;
+      setFilled(span.innerText.trim() !== "");
 
       const event = {
         ...e,
         target: { ...e.target, name: name, value: span.innerText },
       };
-      if (onChange) onChange(event as any);
+      if (onChange)
+        onChange(event as unknown as ChangeEvent<HTMLTextAreaElement>);
     },
     [name, onChange]
   );
@@ -65,9 +69,7 @@ export default function InputAutoHeight({
         {label && <span>{label}</span>}
         <span
           ref={spanRef}
-          className={`${css.autoHeight} ${
-            spanRef.current?.innerText?.trim() == "" ? "" : css.valid
-          }`}
+          className={`${css.autoHeight} ${filled ? css.valid : ""}`}
           role="textbox"
           contentEditable
         >
