@@ -1,8 +1,15 @@
 "use client";
 
 import { Settings } from "@/assets/svg";
+import { cn } from "@/utils/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { ChangeEvent, useCallback, useEffect, useLayoutEffect, useState } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useLayoutEffect,
+  useSyncExternalStore,
+} from "react";
 
 function ColorInput({
   color,
@@ -34,7 +41,43 @@ const defaultColors = {
   dark: "#131314",
 };
 
+const backgrounds = [
+  { id: "dots", name: "Dots" },
+  { id: "grain", name: "Grain" },
+  { id: "circuit", name: "Circuit" },
+  { id: "seal", name: "Seal" },
+];
+const defaultBg = backgrounds[0].id;
+
+const bgListeners = new Set<() => void>();
+const subscribeBg = (cb: () => void) => {
+  bgListeners.add(cb);
+  return () => {
+    bgListeners.delete(cb);
+  };
+};
+const getBg = () => {
+  const saved = localStorage.getItem("page-bg");
+  return backgrounds.some((b) => b.id === saved) ? saved! : defaultBg;
+};
+const applyBg = (id: string, isReset = false) => {
+  document.documentElement.dataset.bg = id;
+  if (!isReset) localStorage.setItem("page-bg", id);
+  else localStorage.removeItem("page-bg");
+  bgListeners.forEach((cb) => cb());
+};
+
 export default function HeaderSettings() {
+  const bg = useSyncExternalStore(subscribeBg, getBg, () => defaultBg);
+  const bgIndex = Math.max(
+    0,
+    backgrounds.findIndex((b) => b.id === bg)
+  );
+  const stepBg = (dir: number) =>
+    applyBg(
+      backgrounds[(bgIndex + dir + backgrounds.length) % backgrounds.length].id
+    );
+
   const set = useCallback(
     (el: string, val: string, isReset: boolean = false) => {
       document.documentElement.style.setProperty(el, val);
@@ -55,6 +98,7 @@ export default function HeaderSettings() {
     Object.entries(defaultColors).forEach(([el, val]) => {
       set(`--color-${el}`, val, true);
     });
+    applyBg(defaultBg, true);
   }, [set]);
 
   useLayoutEffect(() => {
@@ -67,6 +111,7 @@ export default function HeaderSettings() {
     if (activeColors2) set(`--color-active-2`, activeColors2);
     if (brightColors) set(`--color-bright`, brightColors);
     if (darkColors) set(`--color-dark`, darkColors);
+    document.documentElement.dataset.bg = getBg();
   }, [set]);
 
   return (
@@ -108,6 +153,44 @@ export default function HeaderSettings() {
               setColor={colorchange}
               label="Color 2"
             />
+          </article>
+          <article className="space-y-2">
+            <p className="font-audiowide">Background</p>
+            <div className="flex items-center justify-between gap-2 px-4 font-semibold">
+              <button
+                type="button"
+                aria-label="Previous background"
+                onClick={() => stepBg(-1)}
+              >
+                <ChevronLeft className="size-5" />
+              </button>
+              <span>{backgrounds[bgIndex].name}</span>
+              <button
+                type="button"
+                aria-label="Next background"
+                onClick={() => stepBg(1)}
+              >
+                <ChevronRight className="size-5" />
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2 px-4">
+              {backgrounds.map((b) => (
+                <button
+                  key={b.id}
+                  type="button"
+                  title={b.name}
+                  aria-label={`${b.name} background`}
+                  aria-pressed={b.id === bg}
+                  data-bg={b.id}
+                  onClick={() => applyBg(b.id)}
+                  style={{ background: "var(--page-bg)" }}
+                  className={cn(
+                    "size-8 rounded-md border",
+                    b.id === bg && "outline-2 outline-offset-2 outline-foreground"
+                  )}
+                />
+              ))}
+            </div>
           </article>
           <button
             onClick={resetColors}
