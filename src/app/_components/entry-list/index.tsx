@@ -1,11 +1,10 @@
 "use client";
 
-import Accordion from "@/app/_components/accordion";
 import { NavLink } from "@/app/_components/header";
 import PageHeader from "@/app/_components/ui/page-header";
 import { cn } from "@/utils/utils";
-import { ArrowUpRight } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ReactNode, useId, useState } from "react";
 import css from "./style.module.scss";
 
 export type Entry = {
@@ -14,46 +13,98 @@ export type Entry = {
   location?: string;
   date?: string;
   link?: string;
+  stack?: string[];
   desc: ReactNode;
 };
 
-export default function EntryList({ items }: { items: Entry[] }) {
+const pad = (n: number) => String(n).padStart(2, "0");
+
+export default function EntryList({
+  items,
+  variant = "cards",
+}: {
+  items: Entry[];
+  variant?: "timeline" | "cards";
+}) {
+  const baseId = useId();
   const [openTitle, setOpenTitle] = useState<string | null>(null);
+  const toggle = (title: string) =>
+    setOpenTitle((cur) => (cur === title ? null : title));
 
   return (
-    <div className={cn(css.list)}>
-      {items.map((item) => (
-        <Accordion
-          key={item.title}
-          open={openTitle === item.title}
-          onToggle={() =>
-            setOpenTitle((cur) => (cur === item.title ? null : item.title))
-          }
-          title={
-            <>
-              <PageHeader cursorSize="2rem" noSpan>
-                {item.title}
-              </PageHeader>
-              <em>
-                <b>{item.subtitle}</b>
-                {item.location && <small> · {item.location}</small>}
-                {item.date && <small>, {item.date}</small>}
-                {item.link && (
-                  <NavLink
-                    href={item.link}
-                    icon={<ArrowUpRight className="inline size-4" />}
-                    className="pl-4 not-italic"
+    <ol className={cn(css.list, variant === "timeline" && css.timeline)}>
+      {items.map((item, i) => {
+        const open = openTitle === item.title;
+        const bodyId = `${baseId}-${i}`;
+        const current = /present/i.test(item.date ?? "");
+
+        return (
+          <li
+            key={item.title}
+            className={cn(
+              css.item,
+              i % 2 ? "tone-2" : "tone-1",
+              open && css.open,
+              current && css.current
+            )}
+          >
+            {variant === "timeline" && (
+              <span aria-hidden="true" className={css.node} />
+            )}
+
+            <div className={css.card}>
+              <div className={css.head} onClick={() => toggle(item.title)}>
+                <p className={css.meta}>
+                  <span>{variant === "timeline" ? item.date : pad(i + 1)}</span>
+                  <ChevronDown className={css.chevron} aria-hidden="true" />
+                </p>
+
+                <PageHeader cursorSize="2rem" noSpan className={css.title}>
+                  <button
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={bodyId}
                   >
-                    Visit
-                  </NavLink>
+                    {item.title}
+                  </button>
+                </PageHeader>
+
+                <p className={css.sub}>
+                  <b>{item.subtitle}</b>
+                  {item.location && <span> · {item.location}</span>}
+                  {item.link && (
+                    <span
+                      className={css.visit}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <NavLink
+                        href={item.link}
+                        icon={<ArrowUpRight className="size-4" />}
+                      >
+                        Visit
+                      </NavLink>
+                    </span>
+                  )}
+                </p>
+
+                {item.stack && (
+                  <ul className={css.stack}>
+                    {item.stack.map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
                 )}
-              </em>
-            </>
-          }
-        >
-          {item.desc}
-        </Accordion>
-      ))}
-    </div>
+              </div>
+
+              <div id={bodyId} className={css.body} inert={!open}>
+                <div>
+                  <div className={css.desc}>{item.desc}</div>
+                </div>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

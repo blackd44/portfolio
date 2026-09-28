@@ -7,6 +7,7 @@ const experience: Entry[] = [
     subtitle: "AC Mobility · Tap & Go",
     location: "Kigali, Rwanda",
     date: "OCT 2025 - PRESENT",
+    stack: ["Node.js", "Express", "PostgreSQL"],
     desc: (
       <ul>
         <li>
@@ -34,6 +35,7 @@ const experience: Entry[] = [
     subtitle: "Blockchain Tech Solutions",
     location: "Remote · UK",
     date: "JUN 2024 - SEP 2025",
+    stack: ["NestJS", "PostgreSQL", "WebSockets"],
     desc: (
       <ul>
         <li>
@@ -62,6 +64,7 @@ const experience: Entry[] = [
     subtitle: "Uruti Hub",
     location: "Kigali, Rwanda",
     date: "DEC 2023 - JUL 2024",
+    stack: ["React", "TypeScript"],
     desc: (
       <ul>
         <li>
@@ -83,6 +86,7 @@ const experience: Entry[] = [
     title: "Software Developer Apprenticeship",
     subtitle: "Andera",
     date: "DEC 2022 - SEP 2023",
+    stack: ["TypeScript", "React", "GraphQL", "PostgreSQL"],
     desc: (
       <ul>
         <li>
@@ -107,7 +111,7 @@ export default function Experience() {
   return (
     <>
       <PageHeader>My Experience</PageHeader>
-      <EntryList items={experience} />
+      <EntryList items={experience} variant="timeline" />
     </>
   );
 }

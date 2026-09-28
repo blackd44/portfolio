@@ -3,5 +3,14 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+
+    b {
+      color: var(--mix-2);
+      transition: color var(--fast-transition-speed) ease;
+    }
+
+    &:hover b {
+      color: var(--color-active-2);
+    }
   }
 }

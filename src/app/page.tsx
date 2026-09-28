@@ -1,5 +1,6 @@
 import Content from "@/app/_components/content";
 import PageHeader from "./_components/ui/page-header";
+import { cn } from "@/utils/utils";
 
 const impact = [
   {
@@ -25,7 +26,9 @@ export default function Home() {
         className="leading-8 opacity-85 text-5xl! pb-4"
       >
         <span className="leading-none">Backend Engineer</span> <br />
-        <span className="text-lg leading-none">Scalable APIs · Real-Time Systems</span>
+        <span className="text-lg leading-none">
+          Scalable APIs · Real-Time Systems
+        </span>
       </PageHeader>
       <div className="space-y-4 [&_span]:opacity-80">
         <p
@@ -39,8 +42,8 @@ export default function Home() {
           </b>
           <span>
             , a Backend Engineer with 4+ years of experience delivering
-            production systems where scale and reliability are non-negotiable:
-            a real-time gaming platform grown to 200K+ users within 60 days of
+            production systems where scale and reliability are non-negotiable: a
+            real-time gaming platform grown to 200K+ users within 60 days of
             launch, and a nationwide transit ticketing and payments backend
             processing real-money transactions every day. I specialize in
             Node.js, TypeScript, and PostgreSQL, with a focus on API design,
@@ -49,9 +52,13 @@ export default function Home() {
           </span>
         </p>
         <div className="grid gap-4 sm:grid-cols-3 pt-2">
-          {impact.map(({ value, desc }) => (
-            <div key={value}>
-              <PageHeader cursorSize="2rem" noSpan className="m-0 mb-1">
+          {impact.map(({ value, desc }, i) => (
+            <div key={value} className={cn(i % 2 ? "tone-2" : "tone-1")}>
+              <PageHeader
+                cursorSize="2rem"
+                noSpan
+                className="m-0 mb-1 text-(--tint)"
+              >
                 {value}
               </PageHeader>
               <p>

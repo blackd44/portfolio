@@ -221,7 +221,7 @@ button:not(:disabled) {
   }
 }
 
-header {
+.main-container-inner > header {
   @include flexFillStart;
 
   position: sticky;
@@ -383,6 +383,30 @@ header {
   }
 }
 
+@property --tint {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+.tone-1 {
+  --tone: var(--color-active);
+}
+
+.tone-2 {
+  --tone: var(--color-active-2);
+}
+
+.tone-1,
+.tone-2 {
+  --tint: color-mix(in oklab, var(--tone) 45%, var(--color-bright));
+  transition: --tint var(--fast-transition-speed) ease;
+
+  &:hover {
+    --tint: var(--tone);
+  }
+}
+
 .border-color {
   border-color: color-mix(in oklab, var(--color-bright) 10%, transparent);
 }
@@ -500,7 +524,7 @@ footer {
   @include flexEnd;
 
   gap: 5px;
-  padding: calc(var(--padding-size) * 2) 0 0;
+  padding: calc(var(--padding-size) * 1.5) 0 0;
 }
 
 @media (prefers-color-scheme: dark) {

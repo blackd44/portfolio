@@ -24,6 +24,7 @@ const projects: Entry[] = [
     title: "Kokomo Games",
     subtitle: "Real-Time Gaming Platform",
     link: "https://play.kokomo.games/",
+    stack: ["NestJS", "PostgreSQL", "WebSockets"],
     desc: (
       <ul>
         <li>
@@ -56,6 +57,7 @@ const projects: Entry[] = [
     title: "Tap & Go",
     subtitle: "National Transit E-Ticketing",
     link: "https://www.acgroup.rw/",
+    stack: ["Node.js", "Express", "PostgreSQL"],
     desc: (
       <ul>
         <li>

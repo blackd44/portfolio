@@ -13,6 +13,7 @@ type AccProps = ItemProps & {
   // pass both to control it (e.g. one open at a time); omit for uncontrolled
   open?: boolean;
   onToggle?: () => void;
+  className?: string;
 };
 
 export default function Accordion({
@@ -21,11 +22,12 @@ export default function Accordion({
   onClick,
   open,
   onToggle,
+  className,
 }: AccProps) {
   const id = useId();
 
   return (
-    <div className={cn(css.box, "[&>label]:hover:outline-1 -mx-3")}>
+    <div className={cn(css.box, "[&>label]:hover:outline-1 -mx-3", className)}>
       <input
         type="checkbox"
         id={id}

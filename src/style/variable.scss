@@ -4,6 +4,8 @@
   --color-bright: #d1d1d1;
   --color-dark: #131314;
   --color-error: #ff6b6b;
+  --mix-1: color-mix(in oklab, var(--color-active) 35%, var(--color-bright));
+  --mix-2: color-mix(in oklab, var(--color-active-2) 35%, var(--color-bright));
   --color-active: #00ffff;
   --color-active-2: #ff00ff;
 
