@@ -64,13 +64,13 @@ const Mouse = () => {
     });
 
     //back filter
-    const filters = document.querySelectorAll("[data-cursor-filter]");
+    const filters = document.querySelectorAll("[data-cursor-filter], button");
     filters.forEach((el) => {
-      (el as HTMLDivElement).style.cursor = "none";
+      if (el.matches("[data-cursor-filter]")) (el as HTMLDivElement).style.cursor = "none";
       el.addEventListener("mouseenter", (event) => {
         if (!cursor.current) return;
 
-        cursor.current.style.backdropFilter = `${(el as HTMLDivElement).dataset.cursorFilter}`;
+        cursor.current.style.backdropFilter = `${(el as HTMLDivElement).dataset.cursorFilter ?? "invert(1)"}`;
         cursor.current.style.borderWidth = "0";
       });
       el.addEventListener("mouseleave", (event) => {
@@ -82,13 +82,13 @@ const Mouse = () => {
     });
 
     //size
-    const sizes = document.querySelectorAll("[data-cursor-size]");
+    const sizes = document.querySelectorAll("[data-cursor-size], button");
     sizes.forEach((el) => {
       el.addEventListener("mouseenter", (event) => {
         if (!cursor.current) return;
 
-        cursor.current.style.width = `${(el as HTMLDivElement).dataset.cursorSize}`;
-        cursor.current.style.height = `${(el as HTMLDivElement).dataset.cursorSize}`;
+        cursor.current.style.width = `${(el as HTMLDivElement).dataset.cursorSize ?? "35px"}`;
+        cursor.current.style.height = `${(el as HTMLDivElement).dataset.cursorSize ?? "35px"}`;
       });
       el.addEventListener("mouseleave", (event) => {
         if (!cursor.current) return;

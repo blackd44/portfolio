@@ -20,6 +20,11 @@ body {
 
 a {
   all: unset;
+  cursor: pointer;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
 }
 
 .main-container {
