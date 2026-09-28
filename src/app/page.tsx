@@ -24,8 +24,8 @@ export default function Home() {
         cursorSize="4rem"
         className="leading-8 opacity-85 text-5xl! pb-4"
       >
-        Backend Engineer <br />
-        <small className="text-lg">Scalable APIs · Real-Time Systems</small>
+        <span className="leading-none">Backend Engineer</span> <br />
+        <span className="text-lg leading-none">Scalable APIs · Real-Time Systems</span>
       </PageHeader>
       <div className="space-y-4 [&_span]:opacity-80">
         <p

@@ -2,7 +2,6 @@
 @use "variable.scss" as *;
 @use "function.scss" as *;
 
-
 * {
   box-sizing: border-box;
   // font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -15,7 +14,8 @@ body {
   min-height: 100vh;
   color: #d1d1d1;
   color: var(--color-bright);
-  background: var(--color-dark);
+  background: var(--page-bg);
+  background-attachment: fixed;
 }
 
 a {
@@ -43,7 +43,6 @@ a {
 
       width: 100%;
       border-radius: 10px;
-      background-color: var(--color-dark);
       padding: calc(var(--padding-size) + 10px);
     }
   }
@@ -56,17 +55,21 @@ a {
   z-index: 3;
   pointer-events: none;
   top: calc(var(--frame-bleed) * -1);
-  left: 50%;
-  translate: -50% 0;
-  width: calc(min(100%, 1280px) + var(--frame-bleed) * 2);
+  left: calc(var(--frame-bleed) * -1);
+  right: calc(var(--frame-bleed) * -1);
+  margin-inline: auto;
+  max-width: calc(1280px + var(--frame-bleed) * 2);
   height: calc(100vh + var(--frame-bleed) * 2);
   height: calc(100dvh + var(--frame-bleed) * 2);
   padding: calc(var(--padding-size) + var(--frame-bleed));
   border-radius: calc(10px + var(--padding-size) + var(--frame-bleed));
-  -webkit-mask: linear-gradient(#000 0 0) content-box,
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
 
   &::before,
   &::after {
@@ -76,7 +79,8 @@ a {
 
   &::before {
     inset: 0;
-    background: var(--color-dark);
+    background: var(--page-bg);
+    background-attachment: fixed;
   }
 
   &::after {
@@ -134,7 +138,6 @@ a {
       > .mine-content-inner {
         position: relative;
         padding: calc(var(--padding-size) * 1.5) calc(var(--padding-size) * 1.5);
-        background-color: var(--color-dark);
         z-index: 1;
         border-radius: inherit;
 
@@ -194,8 +197,17 @@ a {
       width: 90px;
       height: 90px;
       max-height: calc(100% + var(--sm-line-width));
-      border-radius: inherit;
-      background: var(--linear-gradient-medium-half);
+      border: 0 solid transparent;
+      border-width: var(--sm-line-width) 0 0 var(--sm-line-width);
+      border-top-left-radius: calc(7px + var(--sm-line-width));
+      background: var(--linear-gradient-medium-half) border-box;
+      -webkit-mask:
+        linear-gradient(#000 0 0) padding-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#000 0 0) padding-box exclude,
+        linear-gradient(#000 0 0);
       position: absolute;
       top: calc(var(--sm-line-width) * -1);
       left: calc(var(--sm-line-width) * -1);
@@ -210,7 +222,8 @@ header {
   position: sticky;
   top: var(--padding-size);
   z-index: 2;
-  background-color: var(--color-dark);
+  background: var(--page-bg);
+  background-attachment: fixed;
   margin-top: calc((var(--padding-size) + 10px) * -1);
   padding: calc(var(--padding-size) + 10px) 0 10px;
 
@@ -493,7 +506,8 @@ footer {
 
   body {
     color: var(--color-bright);
-    background: var(--color-dark);
+    background: var(--page-bg);
+    background-attachment: fixed;
   }
 }
 
