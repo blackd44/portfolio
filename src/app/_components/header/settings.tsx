@@ -2,6 +2,7 @@
 
 import { Settings } from "@/assets/svg";
 import { cn } from "@/utils/utils";
+import { applyBgPatterns } from "./bg-patterns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import {
@@ -40,6 +41,15 @@ const defaultColors = {
   bright: "#d1d1d1",
   dark: "#131314",
 };
+
+const themes = [
+  defaultColors,
+  { active: "#ff8a00", "active-2": "#ff2e63", bright: "#e4dcd4", dark: "#151211" },
+  { active: "#38bdf8", "active-2": "#6366f1", bright: "#d3dbe6", dark: "#0e1320" },
+  { active: "#3ddc97", "active-2": "#d4f25a", bright: "#d6ddd8", dark: "#0f1412" },
+  { active: "#a78bfa", "active-2": "#f472b6", bright: "#ddd6e8", dark: "#141118" },
+  { active: "#ffffff", "active-2": "#8a8a8a", bright: "#d1d1d1", dark: "#111111" },
+];
 
 const backgrounds = [
   { id: "dots", name: "Dots" },
@@ -81,6 +91,7 @@ export default function HeaderSettings() {
   const set = useCallback(
     (el: string, val: string, isReset: boolean = false) => {
       document.documentElement.style.setProperty(el, val);
+      if (el === "--color-bright") applyBgPatterns(val);
       if (!isReset) localStorage.setItem(el, val);
       else localStorage.removeItem(el);
     },
@@ -94,11 +105,31 @@ export default function HeaderSettings() {
     [set]
   );
 
+  const nextTheme = useCallback(() => {
+    const next = (Number(localStorage.getItem("color-theme") ?? 0) + 1) % themes.length;
+    Object.entries(themes[next]).forEach(([el, val]) => {
+      set(`--color-${el}`, val);
+    });
+    localStorage.setItem("color-theme", String(next));
+  }, [set]);
+
+  const swapColors = useCallback(
+    (a: string, b: string) => {
+      const style = getComputedStyle(document.documentElement);
+      const one = style.getPropertyValue(`--color-${a}`).trim();
+      const two = style.getPropertyValue(`--color-${b}`).trim();
+      set(`--color-${a}`, two);
+      set(`--color-${b}`, one);
+    },
+    [set]
+  );
+
   const resetColors = useCallback(() => {
     Object.entries(defaultColors).forEach(([el, val]) => {
       set(`--color-${el}`, val, true);
     });
     applyBg(defaultBg, true);
+    localStorage.removeItem("color-theme");
   }, [set]);
 
   useLayoutEffect(() => {
@@ -111,6 +142,7 @@ export default function HeaderSettings() {
     if (activeColors2) set(`--color-active-2`, activeColors2);
     if (brightColors) set(`--color-bright`, brightColors);
     if (darkColors) set(`--color-dark`, darkColors);
+    if (!brightColors) applyBgPatterns(defaultColors.bright);
     document.documentElement.dataset.bg = getBg();
   }, [set]);
 
@@ -125,7 +157,16 @@ export default function HeaderSettings() {
       <div className="rounded-xl rounded-tr-md border border-gray-400/10">
         <div className="py-4 space-y-6">
           <article className="space-y-2">
-            <p className="font-audiowide">Page colors</p>
+            <div className="flex items-center justify-between gap-4">
+              <p className="font-audiowide">Page colors</p>
+              <button
+                type="button"
+                onClick={() => swapColors("bright", "dark")}
+                className="text-sm font-semibold opacity-60 hover:opacity-100 hover:underline"
+              >
+                swap
+              </button>
+            </div>
             <ColorInput
               id="bright"
               color="bright"
@@ -140,7 +181,16 @@ export default function HeaderSettings() {
             />
           </article>
           <article className="space-y-2">
-            <p className="font-audiowide">Line colors</p>
+            <div className="flex items-center justify-between gap-4">
+              <p className="font-audiowide">Line colors</p>
+              <button
+                type="button"
+                onClick={() => swapColors("active", "active-2")}
+                className="text-sm font-semibold opacity-60 hover:opacity-100 hover:underline"
+              >
+                swap
+              </button>
+            </div>
             <ColorInput
               id="active"
               color="active"
@@ -192,12 +242,20 @@ export default function HeaderSettings() {
               ))}
             </div>
           </article>
-          <button
-            onClick={resetColors}
-            className="border-2 w-full p-1 rounded-md font-semibold"
-          >
-            Reset
-          </button>
+          <div className="space-y-2">
+            <button
+              onClick={nextTheme}
+              className="border-2 w-full p-1 rounded-md font-semibold"
+            >
+              Next theme
+            </button>
+            <button
+              onClick={resetColors}
+              className="border-2 w-full p-1 rounded-md font-semibold"
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </div>
     </div>
