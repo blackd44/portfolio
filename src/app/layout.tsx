@@ -56,6 +56,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
+        <div className="page-frame" aria-hidden="true" />
         <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
         <Mouse />
       </body>

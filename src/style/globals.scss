@@ -47,14 +47,40 @@ a {
       padding: calc(var(--padding-size) + 10px);
     }
   }
+}
 
-  > .main-container-outer::after {
+.page-frame {
+  --frame-bleed: 30px;
+
+  position: fixed;
+  z-index: 3;
+  pointer-events: none;
+  top: calc(var(--frame-bleed) * -1);
+  left: 50%;
+  translate: -50% 0;
+  width: calc(min(100%, 1280px) + var(--frame-bleed) * 2);
+  height: calc(100vh + var(--frame-bleed) * 2);
+  height: calc(100dvh + var(--frame-bleed) * 2);
+  padding: calc(var(--padding-size) + var(--frame-bleed));
+  border-radius: calc(10px + var(--padding-size) + var(--frame-bleed));
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+
+  &::before,
+  &::after {
     content: "";
-    width: calc(100% + (var(--padding-size) * 2));
-    height: calc(100% + (var(--padding-size) * 2));
-    top: calc(var(--padding-size) * -1);
-    left: calc(var(--padding-size) * -1);
     position: absolute;
+  }
+
+  &::before {
+    inset: 0;
+    background: var(--color-dark);
+  }
+
+  &::after {
+    inset: var(--frame-bleed);
     background-color: var(--color-active);
     background: var(--linear-gradient-large);
     clip-path: polygon(
@@ -67,17 +93,16 @@ a {
       calc(100% - var(--line-length)) 100%,
       0 var(--line-length)
     );
-    border-radius: inherit;
-    z-index: -1;
+    border-radius: 10px;
   }
 
   @media screen and (max-width: 600px) {
-    > .main-container-outer::after {
+    &::after {
       clip-path: none;
       width: var(--line-length);
       height: var(--line-length);
       border-radius: unset;
-      border-top-left-radius: inherit;
+      border-top-left-radius: 10px;
       background: var(--linear-gradient-medium-half);
     }
   }
@@ -87,6 +112,13 @@ a {
   display: grid;
   align-items: center;
   max-height: calc(100vh - 75px - 80px - (var(--padding-size) * 4));
+
+  @media screen and (min-width: 901px) {
+    position: sticky;
+    top: calc(var(--padding-size) + 75px);
+    align-self: start;
+    height: min(100%, calc(100vh - 75px - 80px - (var(--padding-size) * 4)));
+  }
 
   > .mine-inner {
     position: relative;
@@ -174,6 +206,13 @@ a {
 
 header {
   @include flexFillStart;
+
+  position: sticky;
+  top: var(--padding-size);
+  z-index: 2;
+  background-color: var(--color-dark);
+  margin-top: calc((var(--padding-size) + 10px) * -1);
+  padding: calc(var(--padding-size) + 10px) 0 10px;
 
   > .logo {
     font-size: 400%;
@@ -458,6 +497,10 @@ footer {
   }
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 ::-webkit-scrollbar {
   width: calc(var(--sm-line-width) * 3);
 }
@@ -489,6 +532,10 @@ footer {
 }
 
 @media (hover: hover) {
+  [data-cursor-filter] {
+    cursor: none;
+  }
+
   .cursor {
     @include flexCenter;
     position: fixed;

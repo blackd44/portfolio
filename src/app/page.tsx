@@ -51,7 +51,7 @@ export default function Home() {
         <div className="grid gap-4 sm:grid-cols-3 pt-2">
           {impact.map(({ value, desc }) => (
             <div key={value}>
-              <PageHeader cursorSize="2rem" className="m-0 mb-1">
+              <PageHeader cursorSize="2rem" noSpan className="m-0 mb-1">
                 {value}
               </PageHeader>
               <p>
