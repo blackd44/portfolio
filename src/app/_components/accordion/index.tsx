@@ -10,18 +10,31 @@ type ItemProps = {
 
 type AccProps = ItemProps & {
   title?: ReactNode | string;
+  // pass both to control it (e.g. one open at a time); omit for uncontrolled
+  open?: boolean;
+  onToggle?: () => void;
 };
 
-export default function Accordion({ title, children, onClick }: AccProps) {
+export default function Accordion({
+  title,
+  children,
+  onClick,
+  open,
+  onToggle,
+}: AccProps) {
   const id = useId();
 
   return (
     <div className={cn(css.box, "[&>label]:hover:outline-1 -mx-3")}>
-      <input type="checkbox" id={id} />
+      <input
+        type="checkbox"
+        id={id}
+        {...(onToggle ? { checked: !!open, onChange: onToggle } : {})}
+      />
       <label
         htmlFor={id}
         onClick={onClick}
-        className={cn("outline-color outline! outline-0 px-3! pb-1.5! m-1", "rounded-md")}
+        className={cn("outline-color px-3! pb-1.5! m-1", "rounded-md")}
       >
         <div>{title}</div>
       </label>

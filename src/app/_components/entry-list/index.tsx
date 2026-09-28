@@ -1,9 +1,11 @@
+"use client";
+
 import Accordion from "@/app/_components/accordion";
 import { NavLink } from "@/app/_components/header";
 import PageHeader from "@/app/_components/ui/page-header";
 import { cn } from "@/utils/utils";
 import { ArrowUpRight } from "lucide-react";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import css from "./style.module.scss";
 
 export type Entry = {
@@ -16,11 +18,17 @@ export type Entry = {
 };
 
 export default function EntryList({ items }: { items: Entry[] }) {
+  const [openTitle, setOpenTitle] = useState<string | null>(null);
+
   return (
     <div className={cn(css.list)}>
       {items.map((item) => (
         <Accordion
           key={item.title}
+          open={openTitle === item.title}
+          onToggle={() =>
+            setOpenTitle((cur) => (cur === item.title ? null : item.title))
+          }
           title={
             <>
               <PageHeader cursorSize="2rem" noSpan>
