@@ -37,6 +37,7 @@ export default function EntryList({
         const open = openTitle === item.title;
         const bodyId = `${baseId}-${i}`;
         const current = /present/i.test(item.date ?? "");
+        const timeline = variant === "timeline";
 
         return (
           <li
@@ -48,14 +49,14 @@ export default function EntryList({
               current && css.current
             )}
           >
-            {variant === "timeline" && (
+            {timeline && (
               <span aria-hidden="true" className={css.node} />
             )}
 
             <div className={css.card}>
               <div className={css.head} onClick={() => toggle(item.title)}>
                 <p className={css.meta}>
-                  <span>{variant === "timeline" ? item.date : pad(i + 1)}</span>
+                  <span>{timeline ? item.subtitle : pad(i + 1)}</span>
                   <ChevronDown className={css.chevron} aria-hidden="true" />
                 </p>
 
@@ -70,7 +71,7 @@ export default function EntryList({
                 </PageHeader>
 
                 <p className={css.sub}>
-                  <b>{item.subtitle}</b>
+                  <b>{timeline ? item.date : item.subtitle}</b>
                   {item.location && <span> · {item.location}</span>}
                   {item.link && (
                     <span
