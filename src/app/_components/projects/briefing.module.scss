@@ -1,0 +1,115 @@
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.4rem 1rem;
+}
+
+.stage {
+  margin: 0;
+  font-family: var(--nf-audiowide);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--tint);
+}
+
+.enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tint);
+
+  > span:last-child {
+    display: inline-flex;
+  }
+
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--tint);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+.title {
+  margin: 0.65rem 0 0;
+  font-family: var(--nf-audiowide);
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: uppercase;
+
+  button {
+    all: unset;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--tint);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+  }
+}
+
+// Hidden content keeps its space, so the card never changes height.
+.more {
+  transition:
+    opacity 0.45s ease,
+    translate 0.45s ease,
+    visibility 0.45s;
+
+  &.collapsed {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 0.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .more {
+    transition: none;
+    translate: none;
+  }
+}
+
+.desc {
+  max-width: 62ch;
+  padding-top: 1.1rem;
+  line-height: 1.65;
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 0.65rem;
+  }
+
+  li::marker {
+    color: var(--tint);
+  }
+}
+
+.stack {
+  margin: 1.25rem 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--hairline);
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 600px) {
+  .title {
+    font-size: 1.4rem;
+  }
+}

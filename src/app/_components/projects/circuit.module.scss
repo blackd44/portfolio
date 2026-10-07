@@ -1,0 +1,86 @@
+.root {
+  --board: color-mix(in oklab, var(--color-active) 12%, transparent);
+
+  .base {
+    stroke: var(--board);
+    stroke-width: 4px;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-dasharray: none;
+  }
+
+  .done {
+    stroke-width: 4px;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
+  // Bright packets travelling down the powered part of the trace.
+  .pulse {
+    stroke: #fff;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-dasharray: 6 70;
+    filter: drop-shadow(0 0 4px var(--color-active));
+    animation: signal 1.6s linear infinite;
+  }
+
+  .head {
+    fill: #fff;
+    filter: drop-shadow(0 0 6px var(--color-active));
+  }
+
+  // Chips with pins on both sides.
+  .dot {
+    position: relative;
+    border-radius: 5px;
+    font-size: 0.7rem;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 0.4rem;
+      height: 1.1rem;
+      translate: 0 -50%;
+      background: repeating-linear-gradient(
+        var(--hairline) 0 2px,
+        transparent 2px 4px
+      );
+      transition: background 0.3s ease;
+    }
+
+    &::before {
+      left: -0.5rem;
+    }
+
+    &::after {
+      right: -0.5rem;
+    }
+  }
+
+  .reached .dot {
+    border-radius: 5px;
+
+    &::before,
+    &::after {
+      background: repeating-linear-gradient(
+        var(--tone) 0 2px,
+        transparent 2px 4px
+      );
+    }
+  }
+}
+
+@keyframes signal {
+  to {
+    stroke-dashoffset: -76;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root .pulse {
+    animation: none;
+  }
+}

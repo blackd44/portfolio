@@ -1,8 +1,8 @@
 import PageHeader from "@/app/_components/ui/page-header";
-import EntryList, { Entry } from "@/app/_components/entry-list";
+import ProjectsView, { Project } from "@/app/_components/projects";
 import { NavLink } from "@/app/_components/header";
 
-const projects: Entry[] = [
+const projects: Project[] = [
   {
     title: "Taxacle",
     subtitle: "Online Tax Filing Platform",
@@ -87,7 +87,7 @@ export default function Projects() {
   return (
     <>
       <PageHeader>Key Projects</PageHeader>
-      <EntryList items={projects} />
+      <ProjectsView items={projects} />
     </>
   );
 }

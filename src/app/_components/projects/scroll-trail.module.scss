@@ -1,0 +1,235 @@
+// Layout and motion shared by every trail theme. Themes nest their rules
+// under their own root class so they win over these.
+
+.root {
+  --hairline: color-mix(in oklab, var(--color-bright) 12%, transparent);
+  --pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+
+  path {
+    fill: none;
+  }
+}
+
+.base {
+  stroke: var(--hairline);
+  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-dasharray: 2 8;
+}
+
+.done {
+  stroke-width: 3px;
+  stroke-linecap: round;
+}
+
+.head {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stops {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 6rem;
+  margin: 0;
+  padding: 0.5rem 0 4rem;
+  list-style: none;
+}
+
+// Phones: trail on the left, cards on the right.
+.stop {
+  --tint: color-mix(in oklab, var(--tone) 45%, var(--color-bright));
+
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+
+  &.reached {
+    --tint: var(--tone);
+  }
+}
+
+// Wider: wide cards with the trail beside them, swapping sides each stop.
+@container (min-width: 40rem) {
+  .stops {
+    gap: 10rem;
+  }
+
+  .stop {
+    grid-template-columns: minmax(0, 1fr) 3.5rem;
+    gap: 1.25rem;
+
+    .marker {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .card {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    &:nth-child(even) {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+
+      .marker {
+        grid-column: 1;
+      }
+
+      .card {
+        grid-column: 2;
+      }
+    }
+  }
+}
+
+// The marker is only measured; the dot inside it does the moving.
+.marker {
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0.8rem;
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--hairline);
+  border-radius: 50%;
+  font-family: var(--nf-audiowide);
+  font-size: 0.75rem;
+  background: var(--color-dark);
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  .reached & {
+    border-color: var(--tone);
+    color: var(--color-dark);
+    background: var(--tone);
+    box-shadow:
+      0 0 0 5px color-mix(in oklab, var(--tone) 20%, transparent),
+      0 0 20px var(--tone);
+    animation: pop 0.5s var(--pop);
+  }
+}
+
+@keyframes pop {
+  0% {
+    scale: 0.6;
+  }
+  60% {
+    scale: 1.15;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+// Board-style card: square corners with a lit corner bracket.
+.card {
+  position: relative;
+  padding: 1.5rem 1.6rem 1.6rem;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  cursor: pointer;
+  background:
+    linear-gradient(
+      color-mix(in oklab, var(--tint) 7%, transparent),
+      transparent 50%
+    ),
+    color-mix(in oklab, var(--color-bright) 2%, var(--color-dark));
+  opacity: 0.5;
+  translate: 0 0.75rem;
+  transition:
+    opacity 0.6s ease,
+    translate 0.6s var(--pop),
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
+
+  // Lines of the briefing settle in one after another.
+  > * {
+    translate: 0 0.4rem;
+    transition: translate 0.5s ease;
+  }
+
+  @for $n from 1 through 4 {
+    > :nth-child(#{$n}) {
+      transition-delay: #{($n - 1) * 70}ms;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 0 solid var(--tint);
+    border-width: 2px 0 0 2px;
+    border-top-left-radius: 4px;
+    opacity: 0.5;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover {
+    border-color: color-mix(in oklab, var(--tint) 35%, transparent);
+  }
+
+  .reached & {
+    opacity: 1;
+    translate: 0 0;
+    border-color: color-mix(in oklab, var(--tone) 35%, transparent);
+    box-shadow: 0 18px 40px -28px var(--tone);
+
+    > * {
+      translate: 0 0;
+    }
+
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card > * {
+    translate: none;
+  }
+
+  .reached .dot {
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .card {
+    padding: 1.15rem 1.15rem 1.3rem;
+  }
+
+  .marker {
+    margin-top: 0.5rem;
+  }
+}

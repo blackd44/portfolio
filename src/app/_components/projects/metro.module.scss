@@ -1,0 +1,54 @@
+.root {
+  .base {
+    stroke: color-mix(in oklab, var(--color-bright) 10%, transparent);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    stroke-dasharray: none;
+  }
+
+  .done {
+    stroke-width: 10px;
+    stroke-linejoin: round;
+  }
+
+  .head {
+    fill: var(--color-bright);
+    filter: drop-shadow(0 2px 6px rgb(0 0 0 / 0.6));
+  }
+
+  .window {
+    fill: var(--color-dark);
+  }
+
+  .lamp {
+    fill: #fff6a8;
+    filter: drop-shadow(0 0 4px #fff6a8);
+  }
+
+  // Station: white disc with a thick ring, like a metro map stop.
+  .dot {
+    border: 5px solid color-mix(in oklab, var(--color-bright) 25%, transparent);
+    color: var(--color-dark);
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: var(--color-bright);
+  }
+
+  .reached .dot {
+    border-color: var(--tone);
+    color: var(--color-dark);
+    background: #fff;
+    box-shadow: 0 0 0 4px var(--color-dark), 0 0 0 6px var(--tone);
+  }
+
+  // Rounded station-sign cards, bracket curved to match.
+  .card {
+    border-radius: 18px;
+
+    &::before {
+      width: 2rem;
+      height: 2rem;
+      border-top-left-radius: 18px;
+    }
+  }
+}
