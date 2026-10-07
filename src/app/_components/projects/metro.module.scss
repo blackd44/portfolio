@@ -43,12 +43,11 @@
 
   // Rounded station-sign cards, bracket curved to match.
   .card {
-    border-radius: 18px;
+    --card-radius: 18px;
 
     &::before {
       width: 2rem;
       height: 2rem;
-      border-top-left-radius: 18px;
     }
   }
 }

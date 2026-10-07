@@ -9,6 +9,12 @@
     stroke-dasharray: none;
   }
 
+  // Side traces and vias: part of the board, never lit.
+  .deco {
+    stroke: color-mix(in oklab, var(--color-active) 16%, transparent);
+    stroke-width: 2px;
+  }
+
   .done {
     stroke-width: 4px;
     stroke-linecap: square;
@@ -21,13 +27,14 @@
     stroke-width: 2px;
     stroke-linecap: round;
     stroke-dasharray: 6 70;
-    filter: drop-shadow(0 0 4px var(--color-active));
+    filter: drop-shadow(0 0 4px var(--trail-tone));
     animation: signal 1.6s linear infinite;
   }
 
   .head {
     fill: #fff;
-    filter: drop-shadow(0 0 6px var(--color-active));
+    filter: drop-shadow(0 0 6px var(--trail-tone));
+    transition: filter 0.4s ease;
   }
 
   // Chips with pins on both sides.

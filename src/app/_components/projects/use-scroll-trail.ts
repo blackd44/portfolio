@@ -1,17 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Build } from "./trail-paths";
 
-type Trail = { w: number; h: number; d: string; ys: number[] };
+type Trail = {
+  w: number;
+  h: number;
+  d: string;
+  deco?: string;
+  // Stop heights within the trail.
+  ys: number[];
+  // Half the last stop's height: the trail finishes this far before the bottom.
+  lastHalf: number;
+};
 
-// Where on screen (share of viewport height) the trail chases while scrolling.
-const LINE = 0.65;
-// Over the last stretch of the page (share of viewport height) the line
-// slides to the bottom edge, so the final stops still light up.
-const RAMP = 0.6;
 // How much of the remaining distance the head covers each frame.
 const EASE = 0.14;
 
-// Draws a path through the stop markers as the page scrolls. Paths marked
+// Page scroll at which the trail is complete.
+const scrollEnd = (t: Trail) =>
+  document.documentElement.scrollHeight - window.innerHeight - t.lastHalf;
+
+// Draws a path through the stop markers in step with the page scroll: top of
+// the page is 0%, half the last stop before the bottom is 100%. Paths marked
 // `data-drawn` are revealed; `data-drawn="main"` is the one measured.
 export default function useScrollTrail(build: Build) {
   const root = useRef<HTMLDivElement>(null);
@@ -26,8 +35,13 @@ export default function useScrollTrail(build: Build) {
     const el = root.current;
     if (!el) return;
     const ro = new ResizeObserver(() => {
+      // React briefly nulls refs while re-rendering or unmounting; skip
+      // that moment; the next resize measures again.
+      const els = markers.current;
+      if (!els.length || els.some((m) => !m?.isConnected || !m.parentElement))
+        return;
       const box = el.getBoundingClientRect();
-      const pts = markers.current.map((m) => {
+      const pts = els.map((m) => {
         const r = m!.getBoundingClientRect();
         return {
           x: r.left - box.left + r.width / 2,
@@ -35,17 +49,18 @@ export default function useScrollTrail(build: Build) {
         };
       });
       // Midline of the space between each stop and the next.
-      const stops = markers.current.map((m) =>
-        m!.parentElement!.getBoundingClientRect()
-      );
+      const stops = els.map((m) => m!.parentElement!.getBoundingClientRect());
       const gaps = stops
         .slice(1)
         .map((next, i) => (stops[i].bottom + next.top) / 2 - box.top);
+      const route = build({ pts, gaps, wide: box.width >= 640 });
       setTrail({
         w: box.width,
         h: box.height,
-        d: build({ pts, gaps, wide: box.width >= 640 }),
+        d: route.d,
+        deco: route.deco,
         ys: pts.map((p) => p.y),
+        lastHalf: stops[stops.length - 1].height / 2,
       });
     });
     ro.observe(el);
@@ -97,12 +112,9 @@ export default function useScrollTrail(build: Build) {
 
     const tick = () => {
       frame = 0;
-      const vh = window.innerHeight;
-      const left =
-        document.documentElement.scrollHeight - (window.scrollY + vh);
-      const ramp = Math.min(1, Math.max(0, 1 - left / (vh * RAMP)));
-      const line = vh * (LINE + (1 - LINE) * ramp);
-      const target = progressAt(line - el.getBoundingClientRect().top);
+      const end = scrollEnd(trail);
+      const p = end > 0 ? Math.min(1, Math.max(0, window.scrollY / end)) : 1;
+      const target = progressAt(ys[0] + p * (ys[ys.length - 1] - ys[0]));
       const gap = target - drawn.current;
       drawn.current =
         reduce || Math.abs(gap) < 0.5 ? target : drawn.current + gap * EASE;
@@ -145,5 +157,18 @@ export default function useScrollTrail(build: Build) {
     markers.current[i] = el;
   };
 
-  return { root, marker, head, trail, reached };
+  // Scroll to where stop `i` lights up.
+  const goTo = (i: number) => {
+    if (!trail) return;
+    const { ys } = trail;
+    const span = ys[ys.length - 1] - ys[0];
+    const share = span > 0 ? (ys[i] - ys[0]) / span : 0;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    window.scrollTo({
+      top: share * Math.max(0, scrollEnd(trail)) + 2,
+      behavior: reduce.matches ? "auto" : "smooth",
+    });
+  };
+
+  return { root, marker, head, trail, reached, goTo };
 }

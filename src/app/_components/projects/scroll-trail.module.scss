@@ -29,6 +29,11 @@
   stroke-dasharray: 2 8;
 }
 
+.deco {
+  stroke: var(--hairline);
+  stroke-width: 1.5px;
+}
+
 .done {
   stroke-width: 3px;
   stroke-linecap: round;
@@ -45,7 +50,7 @@
   display: grid;
   gap: 6rem;
   margin: 0;
-  padding: 0.5rem 0 4rem;
+  padding: 0.5rem 0;
   list-style: none;
 }
 
@@ -146,26 +151,22 @@
   }
 }
 
-// Board-style card: square corners with a lit corner bracket.
+// Board-style card: square corners with a lit corner bracket. The card
+// always keeps its full size; the visible frame (::after) shrinks to the
+// heading until the stop is reached. --cut is how much it shrinks by.
 .card {
+  --radius: var(--card-radius, 4px);
+  --frame-border: var(--hairline);
+
   position: relative;
+  isolation: isolate;
   padding: 1.5rem 1.6rem 1.6rem;
-  border: 1px solid var(--hairline);
-  border-radius: 4px;
   cursor: pointer;
-  background:
-    linear-gradient(
-      color-mix(in oklab, var(--tint) 7%, transparent),
-      transparent 50%
-    ),
-    color-mix(in oklab, var(--color-bright) 2%, var(--color-dark));
   opacity: 0.5;
   translate: 0 0.75rem;
   transition:
     opacity 0.6s ease,
-    translate 0.6s var(--pop),
-    border-color 0.6s ease,
-    box-shadow 0.6s ease;
+    translate 0.6s var(--pop);
 
   // Lines of the briefing settle in one after another.
   > * {
@@ -188,20 +189,40 @@
     height: 1.5rem;
     border: 0 solid var(--tint);
     border-width: 2px 0 0 2px;
-    border-top-left-radius: 4px;
+    border-top-left-radius: var(--radius);
     opacity: 0.5;
     transition: opacity 0.4s ease;
   }
 
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: -1;
+    height: calc(100% - var(--cut, 0px));
+    border: 1px solid var(--frame-border);
+    border-radius: var(--radius);
+    background:
+      linear-gradient(
+        color-mix(in oklab, var(--tint) 7%, transparent),
+        transparent 50%
+      ),
+      color-mix(in oklab, var(--color-bright) 2%, var(--color-dark));
+    transition:
+      height 0.55s var(--pop),
+      border-color 0.6s ease,
+      box-shadow 0.6s ease;
+  }
+
   &:hover {
-    border-color: color-mix(in oklab, var(--tint) 35%, transparent);
+    --frame-border: color-mix(in oklab, var(--tint) 35%, transparent);
   }
 
   .reached & {
+    --frame-border: color-mix(in oklab, var(--tone) 35%, transparent);
+
     opacity: 1;
     translate: 0 0;
-    border-color: color-mix(in oklab, var(--tone) 35%, transparent);
-    box-shadow: 0 18px 40px -28px var(--tone);
 
     > * {
       translate: 0 0;
@@ -210,13 +231,27 @@
     &::before {
       opacity: 1;
     }
+
+    &::after {
+      height: 100%;
+      box-shadow: 0 18px 40px -28px var(--tone);
+    }
   }
+}
+
+// No grow/shrink animation before the first measurement.
+.root:not([data-measured]) .card::after {
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card > * {
     translate: none;
+  }
+
+  .card::after {
+    transition: none;
   }
 
   .reached .dot {

@@ -41,6 +41,7 @@ export default function Briefing({ p, i, collapsed, onSelect }: Props) {
         )}
       </h3>
       <div
+        data-more=""
         className={cn(css.more, collapsed && css.collapsed)}
         inert={collapsed}
       >
