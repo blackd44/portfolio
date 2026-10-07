@@ -67,6 +67,20 @@ const projects: Entry[] = [
       </ul>
     ),
   },
+  {
+    title: "Rwanda Villages",
+    subtitle: "Administrative Location Search",
+    link: "https://rwanda-villages.vercel.app/",
+    desc: (
+      <ul>
+        <li>
+          Search any administrative location in Rwanda and see its full
+          hierarchy, from village up through cell, sector, district, and
+          province to country.
+        </li>
+      </ul>
+    ),
+  },
 ];
 
 export default function Projects() {
